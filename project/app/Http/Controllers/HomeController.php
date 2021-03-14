@@ -42,7 +42,7 @@ class HomeController extends Controller
       }
       else
       {
-       $data = Client::orderBy('id', 'desc')
+       $data = Client::orderBy('id', 'desc')->take('3')
          ->get();
       }
       $total_row = $data->count();
