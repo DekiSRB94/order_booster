@@ -51,7 +51,7 @@ class HomeController extends Controller
        foreach($data as $row)
        {
         $output .= '
-        <tr>
+        <tr class="output" vlatko="1">
          <td>'.$row->address.'</td>
          <td>'.$row->phone.'</td>
          <td>'.$row->flat_number.'</td>
@@ -64,24 +64,23 @@ class HomeController extends Controller
       else
       {
        $output .= '
-       <tr>
+       <tr class="output" vlatko="2">
          <td>
-         <input class="address" name="address">
+         <input id="address" name="address" autocomplete="off">
          </td>
          <td>
-         <input name="phone">
+         <input id="phone"  name="phone" autocomplete="off">
          </td>
          <td>
-         <input name="flat_number">
+         <input id="flat_number" name="flat_number" autocomplete="off">
          </td>
          <td>
-         <input name="floor">
+         <input id="floor" name="floor" autocomplete="off">
          </td>
          <td>
-         <input name="intercom">
+         <input id="intercom" name="intercom" autocomplete="off">
          </td>
        </tr>
-       <button type="submit">Dodaj</button>
        ';
       }
       $data = array(

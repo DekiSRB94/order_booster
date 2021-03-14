@@ -38,14 +38,12 @@
  
   
  <div class="wrap">
-  <form>
    <div class="search form-group">
-      <input style="height: 36px;" name="search" id="search" type="text" class="searchTerm" placeholder="Unesite broj za pretragu">
-      <button type="submit" class="searchButton"> 
+      <input style="height: 36px;" name="search" id="search" type="text" class="searchTerm" placeholder="Unesite broj za pretragu" autocomplete="off">
+      <button type="button" class="searchButton"> 
         <i class="fa fa-search"></i>
      </button>
    </div>
- </form>
 </div>
   </div>
   
@@ -56,15 +54,13 @@
 </div>
 </div>
   
-
-  <div class="container box">
-   <h3 align="center">Spisak klijenti</h3><br />
+<div style="background-color: white; padding-left: 10%; padding-right: 10%;">
+  <div class="box">
    <div class="panel panel-default">
-    <div class="panel-heading">Search Customer Data</div>
     <div class="panel-body">
-     <div class="table-responsive">
-      <h3 align="center">Ukupno klijenata : <span id="total_records"></span></h3>
-      <table class="table table-striped table-bordered">
+     <div class="table-responsive" style="padding-top: 3%; padding-bottom: 3%;">
+      <h3 align="center">Klijenti: <span id="total_records" style="color: #00b4cc;"></span></h3>
+      <table class="table table-dark" style="margin-top: 3%; text-align: center;">
        <thead>
         <tr>
          <th>Adresa</th>
@@ -74,19 +70,28 @@
          <th>Interfon</th>
         </tr>
        </thead>
-       <form method="POST" action="/post-client" onsubmit="postClient(); return false">
-        @csrf
        <tbody>
 
        </tbody>
-       <button style="color:red;" type="submit">Dodaj</button>
-     </form>
       </table>
+      <div class="button-div"></div>
      </div>
     </div>    
    </div>
   </div>
+</div>
 
+  <div class="hidden-input" style="display: none;">
+    <form class="post-client-form" method="POST" action="/post-client" onsubmit="postClient(); return false">
+        @csrf
+        <input class="address" type="text" name="address">
+        <input class="phone" type="text" name="phone">
+        <input class="flat_number" type="text" name="flat_number">
+        <input class="floor" type="text" name="floor">
+        <input class="intercom" type="text" name="intercom">
+        <button class="add-client-button" type="submit">Dodaj</button>
+    </form>
+  </div>
 
 
 
@@ -104,7 +109,33 @@
    success:function(data)
    {
     $('tbody').html(data.table_data);
+    $(".button-div").empty().append('<button style="display: none; width: 100%;" type="button" class="btn btn-info">Dodaj novog klijenta</button>');
+    $('.btn-info').click(function(){
+      $('.add-client-button').submit();
+    });
     $('#total_records').text(data.total_data);
+    $('#address').keyup(function (){
+      $('.address').val($(this).val()); 
+    });
+    $('#phone').keyup(function (){
+      $('.phone').val($(this).val()); 
+    });
+    $('#flat_number').keyup(function (){
+      $('.flat_number').val($(this).val()); 
+    });
+    $('#floor').keyup(function (){
+      $('.floor').val($(this).val()); 
+    });
+    $('#intercom').keyup(function (){
+      $('.intercom').val($(this).val()); 
+    });
+     var vlatko = $(".output").attr('vlatko');
+       if(vlatko == "2"){
+          $('.btn-info').css('display', 'block');
+       }
+       else{
+        $('.btn-info').css('display', 'none');
+       }
    }
   })
  }
@@ -114,17 +145,34 @@
   fetch_customer_data(query);
  });
   
-  
-  function postClient(){
-    var address = $(".address").value();
-      $('.client-form').each(function(){
-          $.ajax($(this).attr('action'),
-            {
-              method: $(this).attr('method'),
-              data: {"address": address, "_token": "{{ csrf_token() }}"},        
-            })
-            });
-    }
+  function postClient() {
+     $('.post-client-form').each(function(){
+      var formdata = $(this).serialize();
+        $.ajax($(this).attr('action'),
+          {
+          method: $(this).attr('method'),
+          data: formdata,
+          success: function () {
+            jQuery('.searchTerm').focus().click();
+
+            var str= $(".searchTerm").val();
+            var position = document.getElementById('search').selectionStart-100;
+            str = str.substr(0, position) + '' + str.substr(position + 100);
+            $(".searchTerm").val(str);
+
+            var query = $("#search").val();
+            fetch_customer_data(query);
+
+            $('.address').val("");
+            $('.phone').val("");
+            $('.flat_number').val("");
+            $('.floor').val("");
+            $('.intercom').val("");
+        }
+        })
+      });
+
+  }
 
 </script>
 ​
