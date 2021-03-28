@@ -583,12 +583,15 @@ iframe {
     left: 2;
   }
 
-  .heder-title{
-    vertical-align: middle;
-    line-height: 200px;
+  .header-title{
     font-family: fantasy;
     text-transform: uppercase;
-    
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 
   
@@ -643,7 +646,7 @@ body{
 .wrap{
   width: 50%;
   position: absolute;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

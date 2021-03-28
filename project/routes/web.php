@@ -20,6 +20,6 @@ Route::post('/post-client', 'HomeController@postClient');
 
 Route::get('/live_search/action', 'HomeController@mySearch')->name('live_search.action');
 
-
+Route::get('/klijenti', 'ClientController@show_client');
 
 

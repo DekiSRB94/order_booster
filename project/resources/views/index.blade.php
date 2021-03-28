@@ -25,6 +25,9 @@
   <div class="collapse navbar-collapse" id="navbar-list-2">
     <ul class="navbar-nav">
       <li class="nav-item">
+        <a class="nav-link" href="/klijenti">Klijenti</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/logout">Izloguj se</a>
       </li>
     </ul>
@@ -33,9 +36,10 @@
 ​
 <div class="dektron text-center">
   <div class="row">
-  <div class="col-lg-5">
-  <h1 class="heder-title">Order booster</h1>
- 
+  <div class="col-lg-5" style="height: 500px;">
+    <div class="header-title">
+  <h1>Order booster</h1>
+ </div>
   
  <div class="wrap">
    <div class="search form-group">
@@ -47,7 +51,7 @@
 </div>
   </div>
   
-  <div class="col-lg-7">
+  <div class="col-lg-7" style="height: 500px;">
     <img class="crezy-img" src="/images/img-3.png">
   <img class="head-image" src="/images/img-2.png"> 
 </div>
