@@ -10,13 +10,15 @@ class ClientController extends Controller
 {
     public function show_client(Request $request)
     {
-    	$client = Client::paginate(1);
+    	$user = Auth()->user();
+    	$client = Client::where('user_id', $user->id)->paginate(20);
+    	$all_clients = Client::where('user_id', $user->id)->get();
   
         if ($request->ajax()) {
-            return view('ajaxPagination', compact('client'));
+            return view('presult', compact('client'));
         }
   
-        return view('client',compact('client'));
+        return view('client',compact('client', 'user', 'all_clients'));
     }
     
 }

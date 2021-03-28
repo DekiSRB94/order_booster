@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
             $table->integer('flat_number')->null();
             $table->integer('floor')->null();
             $table->string('intercom')->null();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

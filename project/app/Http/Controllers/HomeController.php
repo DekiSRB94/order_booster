@@ -24,13 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $client = Client::all();
+        $user = Auth()->user();
 
-        return view('index', compact('client'));
+        return view('index', compact('user'));
     }
 
     public function mySearch(Request $request)
     {
+      $user = Auth()->user();
      if($request->ajax())
      {
       $output = '';
@@ -42,7 +43,7 @@ class HomeController extends Controller
       }
       else
       {
-       $data = Client::orderBy('id', 'desc')->take('3')
+       $data = Client::where('user_id', $user->id)->orderBy('id', 'desc')->take('1')
          ->get();
       }
       $total_row = $data->count();
@@ -94,11 +95,14 @@ class HomeController extends Controller
 
     public function postClient(Request $request)
     {
+        $user = Auth()->user();
+
         $data['address'] = $request->address;
         $data['phone'] = $request->phone;
         $data['flat_number'] = $request->flat_number;
         $data['floor'] = $request->floor;
         $data['intercom'] = $request->intercom;
+        $data['user_id'] = $user->id;
 
         $client = Client::create($data); 
         return redirect('/');  

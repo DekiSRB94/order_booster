@@ -14,87 +14,73 @@
 
 <body>
 
-  <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
-  <a class="navbar-brand" href="#">
-    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png" width="30" height="30" alt="logo">
-    OrderBooster
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbar-list-2">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/klijenti">Klijenti</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/logout">Izloguj se</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+  @include('layouts.nav')
 ​
 <div class="dektron text-center">
   <div class="row">
   <div class="col-lg-5" style="height: 500px;">
   	<div class="header-title">
-  <h1>Order booster</h1>
-  <h2>Klijenti</h2>
+  <h1 class="company-name">{{ $user->name }}</h1>
   </div>
   </div>
   
   <div class="col-lg-7" style="height: 500px;">
     <img class="crezy-img" src="/images/img-3.png">
-  <img class="head-image" src="/images/img-2.png"> 
+    <img class="head-image" src="/images/img-2.png"> 
 </div>
 </div>
 </div>
+
+<h3 align="center" style="margin-top: 50px;">Klijenti: <span id="total_records" style="color: #00b4cc;">{{ count($all_clients) }}</span></h3>
   
-<div style="background-color: white; padding-left: 10%; padding-right: 10%;">
-  <div class="box">
-   <div class="panel panel-default">
-    <div class="panel-body">
-     <div class="table-responsive" style="padding-top: 3%; padding-bottom: 3%;">
-      <table class="table table-dark" style="margin-top: 3%; text-align: center;">
-       <thead>
-        <tr>
-         <th>Adresa</th>
-         <th>Telefon</th>
-         <th>Broj stana</th>
-         <th>Sprat</th>
-         <th>Interfon</th>
-        </tr>
-       </thead>
-       <tbody>
-       	@foreach( $client as $c)
-       	<tr>
-       	<td>{{$c->address}}</td>
-       	<td>{{$c->phone}}</td>
-       	<td>{{$c->flat_number}}</td>
-       	<td>{{$c->floor}}</td>
-       	<td>{{$c->intercom}}</td>
-       	</tr>
-       	@endforeach
-       </tbody>
-      </table>
-
-     </div>
-    </div>    
-   </div>
-  </div>
+<div id="tag_container">
+       @include('presult')
 </div>
 
- 
 
-@foreach( $client as $c)
-       	<tr>
-       	<td>{{$c->address}}</td>
-       	<td>{{$c->phone}}</td>
-       	<td>{{$c->flat_number}}</td>
-       	<td>{{$c->floor}}</td>
-       	<td>{{$c->intercom}}</td>
-       	</tr>
-       	@endforeach
+<script type="text/javascript">
+    $(window).on('hashchange', function() {
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            }else{
+                getData(page);
+            }
+        }
+    });
+    
+    $(document).ready(function()
+    {
+        $(document).on('click', '.pagination a',function(event)
+        {
+            event.preventDefault();
+  
+            $('li').removeClass('active');
+            $(this).parent('li').addClass('active');
+  
+            var myurl = $(this).attr('href');
+            var page=$(this).attr('href').split('page=')[1];
+  
+            getData(page);
+        });
+  
+    });
+  
+    function getData(page){
+        $.ajax(
+        {
+            url: '?page=' + page,
+            type: "get",
+            datatype: "html"
+        }).done(function(data){
+            $("#tag_container").empty().html(data);
+            location.hash = page;
+        }).fail(function(jqXHR, ajaxOptions, thrownError){
+              alert('No response from server');
+        });
+    }
+</script>
 
 ​
 </body>

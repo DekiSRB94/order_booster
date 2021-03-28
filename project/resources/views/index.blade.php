@@ -14,31 +14,13 @@
 
 <body>
 
-  <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
-  <a class="navbar-brand" href="#">
-    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png" width="30" height="30" alt="logo">
-    OrderBooster
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbar-list-2">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/klijenti">Klijenti</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/logout">Izloguj se</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+  @include('layouts.nav')
 ​
 <div class="dektron text-center">
   <div class="row">
   <div class="col-lg-5" style="height: 500px;">
     <div class="header-title">
-  <h1>Order booster</h1>
+  <h1 class="company-name">{{ $user->name }}</h1>
  </div>
   
  <div class="wrap">
@@ -63,7 +45,7 @@
    <div class="panel panel-default">
     <div class="panel-body">
      <div class="table-responsive" style="padding-top: 3%; padding-bottom: 3%;">
-      <h3 align="center">Klijenti: <span id="total_records" style="color: #00b4cc;"></span></h3>
+      <!--<h3 align="center">Klijenti: <span id="total_records" style="color: #00b4cc;"></span></h3>-->
       <table class="table table-dark" style="margin-top: 3%; text-align: center;">
        <thead>
         <tr>
@@ -144,9 +126,10 @@
   })
  }
 
+
  $(document).on('keyup', '#search', function(){
   var query = $(this).val();
-  fetch_customer_data(query);
+  fetch_customer_data(query);  
  });
   
   function postClient() {

@@ -16,6 +16,6 @@ class Client extends Model
     ];
 
     protected $fillable = [
-        'address', 'phone', 'flat_number', 'floor', 'intercom',
+        'address', 'phone', 'flat_number', 'floor', 'intercom', 'user_id',
     ];
 }
